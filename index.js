@@ -1,29 +1,19 @@
-const cluster=require('cluster')
-const os=require('os')
-const express=require('express')
-let app=express();
+const http=require('http')
 
+const server=http.createServer((req,res)=>{
+     if(req.url==='/')
+     {
+        res.setHeader('Content-Type','text/plain')
+        res.write('hello')
+        res.end()
+     }
+     else{
+    res.setHeader(404,{'Content-Type':'text/plain'})
+    res.write('404 not found')
+    res.end();
+     }
 
-let noOFcups=os.cpus().length;
-
-if(cluster.isMaster)
-{
-    console.log(`master process started. forking ${noOFcups} workers`)
-
-    for(let i=0;i<noOFcups;i++)
-    {
-        cluster.fork();
-    }
-    cluster.on('exit',()=>{
-        cluster.fork();
-        console.log('new worker started')
-    })
-}
-else{
-
-    app.listen(3000,()=>{
-        console.log(`worker process with pid: ${process.pid} listening to  port 3000`)
-    })
-}
-
-
+})
+server.listen(3000,()=>{
+    console.log('server is running on port 3000')
+})
