@@ -1,19 +1,15 @@
-const http=require('http')
+function fetchdata(callback)
+{
+    setTimeout(()=>{
+        let error=new Error('something is wrong')
+        const data="this is your data"
 
-const server=http.createServer((req,res)=>{
-     if(req.url==='/')
-     {
-        res.setHeader('Content-Type','text/plain')
-        res.write('hello')
-        res.end()
-     }
-     else{
-    res.setHeader(404,{'Content-Type':'text/plain'})
-    res.write('404 not found')
-    res.end();
-     }
+        if(error) callback(error)
+        else callback(null,data)
+    })
 
-})
-server.listen(3000,()=>{
-    console.log('server is running on port 3000')
+}
+fetchdata((error,data)=>{
+    error?console.log(error):console.log(data)
+
 })
