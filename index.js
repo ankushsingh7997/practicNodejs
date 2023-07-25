@@ -1,15 +1,9 @@
-function fetchdata(callback)
-{
-    setTimeout(()=>{
-        let error=new Error('something is wrong')
-        const data="this is your data"
-
-        if(error) callback(error)
-        else callback(null,data)
-    })
-
-}
-fetchdata((error,data)=>{
-    error?console.log(error):console.log(data)
-
+const fs=require('fs')
+// look for the directory otherwise it will give error
+const readStream=fs.createReadStream("C:\\Users\\Ankush\\OneDrive\\Desktop\\New folder (4)\\practice\\input.txt")
+readStream.on('data',(chunkdata)=>{
+    console.log(chunkdata.toString())
+})
+readStream.on('end',()=>{
+    console.log("done reading")
 })
